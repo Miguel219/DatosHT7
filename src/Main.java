@@ -20,15 +20,17 @@ public class Main {
 		//Variable 	que almacena la opcion del menu seleccionada
 		int menu = 0;
 		//Se crea el binary Tree
-		BinaryTree binaryTree = new BinaryTree();
+		BinaryTreeAssociation RootBinaryTree = new BinaryTreeAssociation();
 		
 		//Se lee el archivo txt con las palabras traducidas que tendra el diccionario
 		try {
 			Stream<String> lines = Files.lines(Paths.get("diccionario.txt"),StandardCharsets.UTF_8);
 			lines.forEach(i->{
-				String english = i.substring(i.indexOf("("), i.indexOf(","));
+				String english = i.substring(i.indexOf("(")+1, i.indexOf(","));
 				String spanish = i.substring(i.indexOf(",")+1, i.indexOf(")"));
 				Association<String, String> association = new Association(english,spanish);
+				BinaryTreeAssociation SubTree = new BinaryTreeAssociation(association);
+				RootBinaryTree.newTranslation(SubTree);
 			});
 		} catch (IOException e) {
 			// TODO: handle exception
@@ -58,7 +60,7 @@ public class Main {
 					
 			//Funcion 1
 			if(menu==1) {
-				
+				RootBinaryTree.inOrderAssociation();
 			}
 			
 			//Funcion 2

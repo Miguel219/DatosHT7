@@ -4,7 +4,7 @@ public class BinaryTree<E>{
 	
 	protected E val; // value associated with node
 	protected BinaryTree<E> parent; // parent of node
-	protected BinaryTree<E> left, right; // children of node
+	protected BinaryTree<E> left , right; // children of node
 	
 	public BinaryTree()
 	// post: constructor that generates an empty node
@@ -18,23 +18,9 @@ public class BinaryTree<E>{
 	// post: returns a tree referencing value and two empty subtrees
 	{
 		val = value;
-		right = left = new BinaryTree<E>();
-		setLeft(left);
-		setRight(right);
+		
 	}
-	public BinaryTree(E value, BinaryTree<E> left, BinaryTree<E> right)
-	// post: returns a tree referencing value and two subtrees
-	{
-		val = value;
-		if (left == null) { 
-			left = new BinaryTree<E>(); 
-		}
-		setLeft(left);
-		if (right == null) { 
-			right = new BinaryTree<E>(); 
-		}
-		setRight(right);
-	}
+
 	public BinaryTree<E> left()
 	// post: returns reference to (possibly empty) left subtree
 	// post: returns reference to (possibly empty) left subtree
@@ -54,35 +40,28 @@ public class BinaryTree<E>{
 	public void setLeft(BinaryTree<E> newLeft)
 	// post: sets left subtree to newLeft
 	// re-parents newLeft if not null
-	{
-		if (isEmpty(newLeft)) {
-			return;
+		{
+		
+		if(newLeft!=null) {
+			left = newLeft;
+			left.setParent(this);
 		}
-		if (left != null && left.parent() == this) {
-			left.setParent(null);
-		}
-		left = newLeft;
-		left.setParent(this);
 		}
 	
-public void setRight(BinaryTree<E> newRight)
-// post: sets left subtree to newLeft
-// re-parents newLeft if not null
-{
-	if (isEmpty(newRight)) { 
-		return;
-	}
-	if (right != null && right.parent() == this) {
-		right.setParent(null);
-	}
-	right = newRight;
-	right.setParent(this);
+	public void setRight(BinaryTree<E> newRight)
+	// post: sets left subtree to newLeft
+	// re-parents newLeft if not null
+	{
+		if(newRight!=null) {
+			right = newRight;
+			right.setParent(this);
+		}
 	}
 
 	protected void setParent(BinaryTree<E> newParent)
 	// post: re-parents this node to parent reference, or null
 	{
-		if (!isEmpty(newParent)) {
+		if (newParent!=null) {
 			parent = newParent;
 		}
 	}
@@ -93,7 +72,7 @@ public void setRight(BinaryTree<E> newRight)
 	private void inOrder(BinaryTree<E> tree) { 
 		if (tree == null) 
 			{ return; } 
-		inOrder(tree.left);  
+		inOrder(tree.left);
 		inOrder(tree.right);
 		}
 
@@ -140,9 +119,18 @@ public void setRight(BinaryTree<E> newRight)
 		val = value;
 	}
 	
-	public boolean isEmpty(BinaryTree<E> tree)
-	// post: sets the value associated with this node
-	{
-		return tree==null;
+	public boolean hasLeftChild() {
+		if(left==null) {
+			return false;
+		}else{
+			return true;
+		}
+	}
+	public boolean hasRightChild() {
+		if(right==null) {
+			return false;
+		}else{
+			return true;
+		}
 	}
 }

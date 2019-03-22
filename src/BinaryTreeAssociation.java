@@ -2,38 +2,53 @@
 public class BinaryTreeAssociation extends BinaryTree<Association<String, String>> {
 	
 	public BinaryTreeAssociation() {
-		
+		this.setValue(null);
+		this.left=null;
+		this.right=null;
 	}
 	
 	public BinaryTreeAssociation(Association<String,String> assoc) {
 		this.setValue(assoc);
-		this.setLeft(null);
-		this.setRight(null);
-		this.setParent(null);
+		this.left=null;
+		this.right=null;
+		this.parent=null;
 	}
 	
 	//Traduce la palabra si existe en el diccionario sino devuelve null;
 	public String englishToSpanish(String english) {
-		String spanish= inOrderAssociation(this, english);
+		String spanish= searchWord(this, english);
+		if(spanish.equals("")) {
+			spanish="*"+english+"*";
+		}
 		return spanish;
 		
 	}
 	
 	//Busca inOrderAssociation la palabra en ingles;
-	private String inOrderAssociation(BinaryTree<Association<String,String>> tree, String english) { 
-		if (tree.value().getEnglish().equals(english)){ 
+	private String searchWord(BinaryTree<Association<String,String>> tree, String english) { 
+		String translation="";
+		if(tree!=null) {
+			if (tree.value().getEnglish().equals(english)){ 
 				return (tree.value().getSpanish());
+			}
 		}
-		inOrderAssociation(tree.left,english);
-		inOrderAssociation(tree.right,english);
-		return ("*"+english+"*");
+	
+		if(tree.left!=null && translation.equals("")) {
+			translation=searchWord(tree.left,english);
+		}
+		if(tree.right!=null && translation.equals("")) {
+			translation=searchWord(tree.right,english);
+		}
+			
+		return translation;
+		
 		}
 	
 	//Guarda las palabras en orden;
 	public  void newTranslation(BinaryTree<Association<String,String>> tree) {
 		if(this.value()==null && this.isRoot()) {
 			this.setValue(tree.value());
-		} else if(this.value().getEnglish().compareTo((tree.value().getEnglish()))>0) {
+		} else if(this.value().getEnglish().compareTo((tree.value().getEnglish()))<0) {
 			if(this.right()==null && tree.value()!=null) {
 				this.setRight(tree);
 			}else{
@@ -54,13 +69,13 @@ public class BinaryTreeAssociation extends BinaryTree<Association<String, String
 		inOrderAssociation(this);
 	  }
 	 private void inOrderAssociation(BinaryTreeAssociation tree) { 
-		if (tree.value() == null || tree==null) 
+		if (tree == null ) 
 			{ return; } 
 		
 		inOrderAssociation((BinaryTreeAssociation)tree.left());
 		System.out.println("("+tree.value().getEnglish()+","+tree.value().getSpanish()+")");
 		inOrderAssociation((BinaryTreeAssociation)tree.right());
-		System.out.println("("+tree.value().getEnglish()+","+tree.value().getSpanish()+")");
+		
 	}
 		
 }

@@ -8,6 +8,9 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.stream.Stream;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+
 
 public class Main {
 
@@ -65,6 +68,43 @@ public class Main {
 			
 			//Funcion 2
 			if(menu==2) {
+				boolean errorOnFile=false;
+				String fileDirectory;
+				
+				do {	
+					System.out.println("Ingresa la direccion del archivo para traducir el texto: ");
+					fileDirectory = s.nextLine();
+					try {
+						//Se lee el archivo
+						 Scanner scann = new Scanner(new File(fileDirectory));
+						 String line = "";
+							String traduction="\t";
+							String textForTraduction="\t";
+							while (scann.hasNextLine()) {
+								line = scann.nextLine()+ " ";
+								//Se hace un arreglo de strings
+								String[] text = line.split(" ");
+								//Se recorre la linea del archivo txt
+								for (int i = 0; i < text.length; i++) {
+									String word = text[i];
+									
+									textForTraduction = " " + textForTraduction + word + " " ;
+									traduction =  " "+ traduction + RootBinaryTree.englishToSpanish(word) + " ";
+								}
+								
+							}
+							System.out.println("Texto a Traducir");
+							System.out.println(textForTraduction);
+							System.out.println("Texto Traducido");
+							System.out.println(traduction);
+						errorOnFile=false;
+					} catch (Exception e) {
+						System.out.println("Error en datos ingresado");
+						System.out.println("Verifica la dirección del archivo ingresado sea correcta");
+						errorOnFile=true;
+					
+					}
+				}while(errorOnFile);
 				
 			}
 		} while (menu!=3);

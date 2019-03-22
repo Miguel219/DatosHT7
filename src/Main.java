@@ -87,9 +87,19 @@ public class Main {
 								//Se recorre la linea del archivo txt
 								for (int i = 0; i < text.length; i++) {
 									String word = text[i];
-									
-									textForTraduction = " " + textForTraduction + word + " " ;
-									traduction =  " "+ traduction + RootBinaryTree.englishToSpanish(word) + " ";
+									String colons ="";
+									if(word.contains(".")){
+										if(word.indexOf(".")==(word.length()-1))
+										word=word.substring(0, word.indexOf("."));
+										colons=".";
+									}
+									if(word.contains(",")){
+										if(word.indexOf(",")==(word.length()-1))
+										word=word.substring(0, word.indexOf(","));
+										colons=",";
+									}
+									textForTraduction = " " + textForTraduction + word + colons + " ";
+									traduction =  " "+ traduction + RootBinaryTree.englishToSpanish(word)+colons + " ";
 								}
 								
 							}

@@ -28,7 +28,7 @@ public class BinaryTreeAssociation extends BinaryTree<Association<String, String
 	private String searchWord(BinaryTree<Association<String,String>> tree, String english) { 
 		String translation="";
 		if(tree!=null) {
-			if (tree.value().getEnglish().equals(english)){ 
+			if (tree.value().getEnglish().toLowerCase().equals(english.toLowerCase())){ 
 				return (tree.value().getSpanish());
 			}
 		}

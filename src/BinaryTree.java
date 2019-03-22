@@ -1,7 +1,8 @@
 import java.util.Iterator;
 
 public class BinaryTree<E>{
-	
+	//Referencia tomada de libro Java Structures por Duane Bailey
+	//Ejemplo estaba incompleto y ha sido completado y complementado con otros metodos utiles de un arbol.
 	protected E val; // value associated with node
 	protected BinaryTree<E> parent; // parent of node
 	protected BinaryTree<E> left , right; // children of node

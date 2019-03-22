@@ -11,7 +11,8 @@ import java.util.stream.Stream;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
-
+/*Silvio Orozco 18282
+ * Jose Castañeda 18161*/
 public class Main {
 
 	public static void main(String[] args){
@@ -23,23 +24,23 @@ public class Main {
 		//Variable 	que almacena la opcion del menu seleccionada
 		int menu = 0;
 		//Se crea el binary Tree
-		BinaryTreeAssociation RootBinaryTree = new BinaryTreeAssociation();
+		BinaryTreeAssociation DictionaryRoot = new BinaryTreeAssociation();
 		
 		//Se lee el archivo txt con las palabras traducidas que tendra el diccionario
 		try {
 			Stream<String> lines = Files.lines(Paths.get("diccionario.txt"),StandardCharsets.UTF_8);
 			lines.forEach(i->{
 				String english = i.substring(i.indexOf("(")+1, i.indexOf(","));
-				String spanish = i.substring(i.indexOf(",")+1, i.indexOf(")"));
-				Association<String, String> association = new Association(english,spanish);
+				String spanish = i.substring(i.indexOf(",")+2, i.indexOf(")"));
+				Association<String, String> association = new Association<String,String>(english,spanish);
 				BinaryTreeAssociation SubTree = new BinaryTreeAssociation(association);
-				RootBinaryTree.newTranslation(SubTree);
+				DictionaryRoot.newTranslation(SubTree);
 			});
 		} catch (IOException e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-			
+		//Se muestra el menu	
 		do {
 			System.out.println("Ingresa el número de una opcion del menu:\n1.Mostrar la colección ordenada por ingles\n2.Traducir archivo texto.txt\n3.Salir");
 			do{
@@ -61,12 +62,13 @@ public class Main {
 				}
 			}while(validado==false);
 					
-			//Funcion 1
+			//Funcion 1 Se realiza el in Order Association
 			if(menu==1) {
-				RootBinaryTree.inOrderAssociation();
+				DictionaryRoot.inOrderAssociation();
 			}
 			
 			//Funcion 2
+			//Se pide un archivo para traducir y luego lo muestra traducido
 			if(menu==2) {
 				boolean errorOnFile=false;
 				String fileDirectory;
@@ -99,16 +101,18 @@ public class Main {
 										colons=",";
 									}
 									textForTraduction = " " + textForTraduction + word + colons + " ";
-									traduction =  " "+ traduction + RootBinaryTree.englishToSpanish(word)+colons + " ";
+									traduction =  " "+ traduction + DictionaryRoot.englishToSpanish(word)+colons + " ";
 								}
 								
 							}
+							//Muestra el texto inicial y el texto final.
 							System.out.println("Texto a Traducir");
 							System.out.println(textForTraduction);
 							System.out.println("Texto Traducido");
 							System.out.println(traduction);
 						errorOnFile=false;
 					} catch (Exception e) {
+						//Verifica que la direccion sea valida
 						System.out.println("Error en datos ingresado");
 						System.out.println("Verifica la dirección del archivo ingresado sea correcta");
 						errorOnFile=true;
@@ -117,6 +121,7 @@ public class Main {
 				}while(errorOnFile);
 				
 			}
+			//Sale del menu
 		} while (menu!=3);
 	}
 }

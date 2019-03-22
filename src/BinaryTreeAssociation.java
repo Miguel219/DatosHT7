@@ -1,12 +1,13 @@
-//BinaryTree extendido para Association
+
+//BinaryTree extendido para guardar un value de Association y ser un Diccionario
 public class BinaryTreeAssociation extends BinaryTree<Association<String, String>> {
-	
+	//Constructor sin valor
 	public BinaryTreeAssociation() {
 		this.setValue(null);
 		this.left=null;
 		this.right=null;
 	}
-	
+	//Constructor con valor
 	public BinaryTreeAssociation(Association<String,String> assoc) {
 		this.setValue(assoc);
 		this.left=null;
@@ -14,7 +15,7 @@ public class BinaryTreeAssociation extends BinaryTree<Association<String, String
 		this.parent=null;
 	}
 	
-	//Traduce la palabra si existe en el diccionario sino devuelve null;
+	//Traduce la palabra si existe en el diccionario sino devuelve la palabra con asteristico;
 	public String englishToSpanish(String english) {
 		String spanish= searchWord(this, english);
 		if(spanish.equals("")) {
@@ -24,7 +25,7 @@ public class BinaryTreeAssociation extends BinaryTree<Association<String, String
 		
 	}
 	
-	//Busca inOrderAssociation la palabra en ingles;
+	//Busca searchWord la palabra en ingles de forma in order. Devuelve el valor de la traduccion;
 	private String searchWord(BinaryTree<Association<String,String>> tree, String english) { 
 		String translation="";
 		if(tree!=null) {
@@ -44,7 +45,7 @@ public class BinaryTreeAssociation extends BinaryTree<Association<String, String
 		
 		}
 	
-	//Guarda las palabras en orden;
+	//Guarda las palabras en orden al arbol binario, insertando cada una de forma ordenada;
 	public  void newTranslation(BinaryTree<Association<String,String>> tree) {
 		if(this.value()==null && this.isRoot()) {
 			this.setValue(tree.value());
@@ -65,9 +66,11 @@ public class BinaryTreeAssociation extends BinaryTree<Association<String, String
 			
 	}
 	
+	//Recorre el arbol de manera inOrder
 	public void inOrderAssociation() {
 		inOrderAssociation(this);
 	  }
+	//Recorre el arbol de manera inOrder, hijoIzquierdo, padre, hijoDerecho
 	 private void inOrderAssociation(BinaryTreeAssociation tree) { 
 		if (tree == null ) 
 			{ return; } 
